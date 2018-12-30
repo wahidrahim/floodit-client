@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <div class="container">
-      <template v-for="x in 14">
-        <template v-for="y in 14">
-          <cell :row="x" :col="y" :key="x*y"/>
+      <template v-for="x in size">
+        <template v-for="y in size">
+          <cell :row="x" :col="y" :key="`r${x}c${y}`"/>
         </template>
         <br :key="x">
       </template>
@@ -21,13 +21,17 @@ import Cell from '@/components/Cell.vue'
     Cell,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  public size = 14
+}
 </script>
 
 <style lang="scss" scoped>
 .container {
   display: inline-block;
   box-shadow: 0 2px 32px rgba(black, 0.5);
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 </style>
 
