@@ -8,6 +8,7 @@
         <br :key="x">
       </template>
     </div>
+    <colors/>
   </div>
 </template>
 
@@ -15,11 +16,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 import Cell from '@/components/Cell.vue'
+import Colors from '@/components/Colors.vue'
 
 @Component({
   components: {
     Cell,
-  },
+    Colors
+  }
 })
 export default class Home extends Vue {
   public size = 14
@@ -31,6 +34,7 @@ export default class Home extends Vue {
   display: inline-block;
   box-shadow: 0 2px 32px rgba(black, 0.5);
   border-radius: 0.5rem;
+  margin-top: 1rem;
   overflow: hidden;
 }
 </style>
