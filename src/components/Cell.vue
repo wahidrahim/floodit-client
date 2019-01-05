@@ -68,5 +68,7 @@ export default class Cell extends Vue {
   vertical-align: top;
   width: 2rem;
   height: 2rem;
+
+  transition: all 0.5s;
 }
 </style>
