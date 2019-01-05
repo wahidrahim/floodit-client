@@ -3,12 +3,12 @@
     <div class="container">
       <template v-for="x in size">
         <template v-for="y in size">
-          <cell :row="x" :col="y" :key="`r${x}c${y}`"/>
+          <cell :row="x" :col="y" :key="`r${x}c${y}`" :ref="`r${x}c${y}`"/>
         </template>
         <br :key="x">
       </template>
     </div>
-    <colors/>
+    <colors @changeColor="changeColor"/>
   </div>
 </template>
 
@@ -26,6 +26,12 @@ import Colors from '@/components/Colors.vue'
 })
 export default class Home extends Vue {
   public size = 14
+
+  private changeColor(color: number) {
+    const cell = (this.$refs.r1c1 as any[])[0]
+
+    cell.changeColor(color)
+  }
 }
 </script>
 

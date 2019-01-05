@@ -1,12 +1,18 @@
 <template>
-  <div
-    class="cell"
-    :style="{ 'background-color': color }"
-  ></div>
+  <div class="cell" :style="{ 'background-color': color }"></div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+
+const COLORS = [
+  '#ff00e7',
+  '#ff8100',
+  '#e3ff00',
+  '#00ff57',
+  '#00c5ff',
+  '#a300ff'
+]
 
 const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min)
@@ -15,16 +21,7 @@ const getRandomInt = (min: number, max: number) => {
 }
 
 const getRandomColor = () => {
-  const colors = [
-    '#ff00e7',
-    '#ff8100',
-    '#e3ff00',
-    '#00ff57',
-    '#00c5ff',
-    '#a300ff',
-  ]
-
-  return colors[getRandomInt(0, colors.length)]
+  return COLORS[getRandomInt(0, COLORS.length)]
 }
 
 @Component
@@ -40,6 +37,10 @@ export default class Cell extends Vue {
   public created() {
     this.color = getRandomColor()
   }
+
+  public changeColor(color: number) {
+    this.color = COLORS[color]
+  }
 }
 </script>
 
@@ -50,5 +51,4 @@ export default class Cell extends Vue {
   width: 2rem;
   height: 2rem;
 }
-
 </style>

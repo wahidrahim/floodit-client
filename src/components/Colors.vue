@@ -1,11 +1,11 @@
 <template>
   <ul class="colors">
-    <li class="color-1"></li>
-    <li class="color-2"></li>
-    <li class="color-3"></li>
-    <li class="color-4"></li>
-    <li class="color-5"></li>
-    <li class="color-6"></li>
+    <li class="color-0" @click="$emit('changeColor', 0)"></li>
+    <li class="color-1" @click="$emit('changeColor', 1)"></li>
+    <li class="color-2" @click="$emit('changeColor', 2)"></li>
+    <li class="color-3" @click="$emit('changeColor', 3)"></li>
+    <li class="color-4" @click="$emit('changeColor', 4)"></li>
+    <li class="color-5" @click="$emit('changeColor', 5)"></li>
   </ul>
 </template>
 
@@ -17,12 +17,12 @@ export default class Colors extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-$color-1: #ff00e7;
-$color-2: #ff8100;
-$color-3: #e3ff00;
-$color-4: #00ff57;
-$color-5: #00c5ff;
-$color-6: #a300ff;
+$color-0: #ff00e7;
+$color-1: #ff8100;
+$color-2: #e3ff00;
+$color-3: #00ff57;
+$color-4: #00c5ff;
+$color-5: #a300ff;
 
 .colors {
   list-style-type: none;
@@ -42,23 +42,28 @@ $color-6: #a300ff;
       border-radius: 0 8px 8px 0;
     }
 
+    &.color-0 {
+      background-color: $color-0;
+    }
+
     &.color-1 {
       background-color: $color-1;
     }
+
     &.color-2 {
       background-color: $color-2;
     }
+
     &.color-3 {
       background-color: $color-3;
     }
+
     &.color-4 {
       background-color: $color-4;
     }
+
     &.color-5 {
       background-color: $color-5;
-    }
-    &.color-6 {
-      background-color: $color-6;
     }
   }
 }
