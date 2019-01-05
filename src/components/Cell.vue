@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 const COLORS = [
   '#ff00e7',
@@ -27,6 +27,7 @@ const getRandomColor = () => {
 @Component
 export default class Cell extends Vue {
   public color: string = '#000'
+  public neighbors: any[] = []
 
   @Prop()
   public row!: number
@@ -39,7 +40,21 @@ export default class Cell extends Vue {
   }
 
   public changeColor(color: number) {
+    // console.log(`changing color ${this.row},${this.col}: ${color}`)
+    this.notifyNeighbors(color)
     this.color = COLORS[color]
+  }
+
+  public setNeighbors(neighbor: any) {
+    this.neighbors.push(neighbor)
+  }
+
+  private notifyNeighbors(color: number) {
+    this.neighbors.forEach((neighbor) => {
+      if (neighbor.color === this.color) {
+        neighbor.changeColor(color)
+      }
+    })
   }
 }
 </script>

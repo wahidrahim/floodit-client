@@ -27,10 +27,45 @@ import Colors from '@/components/Colors.vue'
 export default class Home extends Vue {
   public size = 14
 
-  private changeColor(color: number) {
-    const cell = (this.$refs.r1c1 as any[])[0]
+  private mounted() {
+    for (let r = 1; r <= this.size; r++) {
+      for (let c = 1; c <= this.size; c++) {
+        const cell = this.getCellComponent(r, c)
 
-    cell.changeColor(color)
+        const left = this.getCellComponent(r, c - 1)
+        const top = this.getCellComponent(r - 1, c)
+        const right = this.getCellComponent(r, c + 1)
+        const bottom = this.getCellComponent(r + 1, c)
+
+        if (left) {
+          cell.setNeighbors(left)
+        }
+
+        if (top) {
+          cell.setNeighbors(top)
+        }
+
+        if (right) {
+          cell.setNeighbors(right)
+        }
+
+        if (bottom) {
+          cell.setNeighbors(bottom)
+        }
+      }
+    }
+  }
+
+  private changeColor(color: number) {
+    const firstCell = this.getCellComponent(1, 1)
+
+    firstCell.changeColor(color)
+  }
+
+  private getCellComponent(row: number, col: number): any {
+    const cell = this.$refs[`r${row}c${col}`] as any[]
+
+    return cell ? cell[0] : null
   }
 }
 </script>
