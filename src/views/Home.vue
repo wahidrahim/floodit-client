@@ -28,6 +28,7 @@ export default class Home extends Vue {
   public size = 14
 
   private mounted() {
+    // set neighbors
     for (let r = 1; r <= this.size; r++) {
       for (let c = 1; c <= this.size; c++) {
         const cell = this.getCellComponent(r, c)
@@ -37,21 +38,7 @@ export default class Home extends Vue {
         const right = this.getCellComponent(r, c + 1)
         const bottom = this.getCellComponent(r + 1, c)
 
-        if (left) {
-          cell.setNeighbors(left)
-        }
-
-        if (top) {
-          cell.setNeighbors(top)
-        }
-
-        if (right) {
-          cell.setNeighbors(right)
-        }
-
-        if (bottom) {
-          cell.setNeighbors(bottom)
-        }
+        cell.setNeighbors([left, top, right, bottom])
       }
     }
   }
