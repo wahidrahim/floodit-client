@@ -3,7 +3,13 @@
     <div class="container">
       <template v-for="x in size">
         <template v-for="y in size">
-          <cell :row="x" :col="y" :key="`r${x}c${y}`" :ref="`r${x}c${y}`"/>
+          <cell
+            :row="x"
+            :col="y"
+            :key="`r${x}c${y}`"
+            :ref="`r${x}c${y}`"
+            @changeColor="changeColor"
+          />
         </template>
         <br :key="x">
       </template>
@@ -25,7 +31,7 @@ import Colors from '@/components/Colors.vue'
   }
 })
 export default class Home extends Vue {
-  public size = 14
+  private size = 14
 
   private mounted() {
     // set neighbors
@@ -33,12 +39,12 @@ export default class Home extends Vue {
       for (let c = 1; c <= this.size; c++) {
         const cell = this.getCellComponent(r, c)
 
-        const left = this.getCellComponent(r, c - 1)
-        const top = this.getCellComponent(r - 1, c)
-        const right = this.getCellComponent(r, c + 1)
-        const bottom = this.getCellComponent(r + 1, c)
-
-        cell.setNeighbors([left, top, right, bottom])
+        cell.setNeighbors([
+          this.getCellComponent(r, c - 1), // left
+          this.getCellComponent(r - 1, c), // top
+          this.getCellComponent(r, c + 1), // right
+          this.getCellComponent(r + 1, c) // bottom
+        ])
       }
     }
   }
@@ -46,7 +52,9 @@ export default class Home extends Vue {
   private changeColor(color: number) {
     const firstCell = this.getCellComponent(1, 1)
 
-    firstCell.changeColor(color)
+    if (color !== firstCell.color) {
+      firstCell.changeColor(color)
+    }
   }
 
   private getCellComponent(row: number, col: number): any {

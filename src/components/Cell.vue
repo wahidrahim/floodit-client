@@ -1,5 +1,9 @@
 <template>
-  <div class="cell" :style="{ 'background-color': color }"></div>
+  <div
+    class="cell"
+    :style="{ 'background-color': colorString }"
+    @click="$emit('changeColor', color)"
+  ></div>
 </template>
 
 <script lang="ts">
@@ -21,27 +25,32 @@ const getRandomInt = (min: number, max: number) => {
 }
 
 const getRandomColor = () => {
-  return COLORS[getRandomInt(0, COLORS.length)]
+  // return COLORS[getRandomInt(0, COLORS.length)]
+  return getRandomInt(0, COLORS.length)
 }
 
 @Component
 export default class Cell extends Vue {
-  public color: string = '#000'
-  public neighbors: any[] = []
-  public notified: boolean = false
+  public color = 0
+  public neighbors = []
+  public notified = false
 
   @Prop()
   public row!: number
-
   @Prop()
   public col!: number
 
-  private newColor: string = ''
+  private newColor = 0
+
+  private get colorString() {
+    return COLORS[this.color]
+  }
 
   public changeColor(color: number) {
-    this.newColor = COLORS[color]
+    this.newColor = color
     this.notified = true
 
+    // notifying neighbors
     this.neighbors.forEach((neighbor: any) => {
       if (neighbor && neighbor.color === this.color && !neighbor.notified) {
         neighbor.changeColor(color)
@@ -68,7 +77,6 @@ export default class Cell extends Vue {
   vertical-align: top;
   width: 2rem;
   height: 2rem;
-
-  transition: all 0.5s;
+  transition: background-color 0.3s;
 }
 </style>
