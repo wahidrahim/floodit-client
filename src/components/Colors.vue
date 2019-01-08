@@ -31,7 +31,7 @@ $color-5: #a300ff;
 
   li {
     display: inline-block;
-    width: 4rem;
+    width: calc((100vw - 3rem) / 6);
     height: 4rem;
 
     &:first-child {

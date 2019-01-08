@@ -75,7 +75,16 @@ export default class Cell extends Vue {
 .cell {
   display: inline-block;
   vertical-align: top;
-  width: 2rem;
-  height: 2rem;
+
+  @media all and (orientation: landscape) {
+    $size: calc((100vh - 3rem) / 14);
+    width: $size;
+    height: $size;
+  }
+  @media all and (orientation: portrait) {
+    $size: calc((100vw - 3rem) / 14);
+    width: $size;
+    height: $size;
+  }
 }
 </style>
