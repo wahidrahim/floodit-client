@@ -25,7 +25,6 @@ const getRandomInt = (min: number, max: number) => {
 }
 
 const getRandomColor = () => {
-  // return COLORS[getRandomInt(0, COLORS.length)]
   return getRandomInt(0, COLORS.length)
 }
 
@@ -40,14 +39,11 @@ export default class Cell extends Vue {
   @Prop()
   public col!: number
 
-  private newColor = 0
-
   private get colorString() {
     return COLORS[this.color]
   }
 
   public changeColor(color: number) {
-    this.newColor = color
     this.notified = true
 
     // notifying neighbors
@@ -57,7 +53,7 @@ export default class Cell extends Vue {
       }
     })
 
-    this.color = this.newColor
+    this.color = color
     this.notified = false
   }
 
