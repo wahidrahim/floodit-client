@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="game">
     <div
       class="container"
       ref="container"
@@ -23,7 +23,7 @@
     </div>
     <colors @changeColor="changeColor"/>
     <h1 class="moves">{{ moves || '' }}</h1>
-    <h2 v-if="gameOver">GAME OVER</h2>
+    <actions/>
   </div>
 </template>
 
@@ -32,11 +32,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 
 import Cell from '@/components/Cell.vue'
 import Colors from '@/components/Colors.vue'
+import Actions from '@/components/Actions.vue'
 
 @Component({
   components: {
     Cell,
-    Colors
+    Colors,
+    Actions
   }
 })
 export default class Home extends Vue {
@@ -68,7 +70,6 @@ export default class Home extends Vue {
         ])
       }
     }
-
   }
 
   private changeColor(color: number) {
@@ -107,6 +108,10 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.game {
+  text-align: center;
+}
+
 .container {
   display: inline-flex;
   flex-wrap: wrap;
