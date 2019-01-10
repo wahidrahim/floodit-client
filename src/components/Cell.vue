@@ -1,7 +1,11 @@
 <template>
   <div
     class="cell"
-    :style="{ 'background-color': colorString }"
+    :style="{ 
+      'background-color': colorString,
+      'width': `${width}px`,
+      'height': `${width}px`
+     }"
     @click="$emit('changeColor', color)"
   ></div>
 </template>
@@ -38,6 +42,12 @@ export default class Cell extends Vue {
   public row!: number
   @Prop()
   public col!: number
+  @Prop()
+  public size!: number
+  @Prop()
+  public containerWidth!: number
+
+  private width: number = 0
 
   private get colorString() {
     return COLORS[this.color]
@@ -64,6 +74,11 @@ export default class Cell extends Vue {
   private created() {
     this.color = getRandomColor()
   }
+
+  private mounted() {
+    // portrait
+    this.width = this.containerWidth / this.size
+  }
 }
 </script>
 
@@ -72,15 +87,15 @@ export default class Cell extends Vue {
   display: inline-block;
   vertical-align: top;
 
-  @media all and (orientation: landscape) {
-    $size: calc((100vh - 3rem) / 14);
-    width: $size;
-    height: $size;
-  }
-  @media all and (orientation: portrait) {
-    $size: calc((100vw - 3rem) / 14);
-    width: $size;
-    height: $size;
-  }
+  // @media all and (orientation: landscape) {
+  //   $size: calc((100vh - 3rem) / 14);
+  //   width: $size;
+  //   height: $size;
+  // }
+  // @media all and (orientation: portrait) {
+  //   $size: calc((100vw - 3rem) / 14);
+  //   width: $size;
+  //   height: $size;
+  // }
 }
 </style>
