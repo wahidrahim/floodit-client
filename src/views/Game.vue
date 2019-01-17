@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="game" ref="game">
     <div
       class="container"
       ref="container"
@@ -23,7 +23,10 @@
     </div>
     <colors @changeColor="changeColor"/>
     <h1 class="moves">{{ moves || '' }}</h1>
-    <h2 v-if="gameOver">GAME OVER</h2>
+
+    <div v-if="gameOver" class="actions">
+      <span class="action">send challenge</span>
+    </div>
   </div>
 </template>
 
@@ -45,13 +48,19 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 14
+  private size = 3
   private moves = 0
   private gameOver = false
   private containerWidth = 0
 
   private beforeMount() {
-    this.containerWidth = window.innerWidth - 48
+    const MAX_WIDTH = 480
+    const PADDING = 32
+
+    this.containerWidth =
+      document.body.clientWidth < MAX_WIDTH
+        ? document.body.clientWidth - PADDING
+        : MAX_WIDTH - PADDING
   }
 
   private mounted() {
@@ -68,7 +77,6 @@ export default class Home extends Vue {
         ])
       }
     }
-
   }
 
   private changeColor(color: number) {
@@ -107,6 +115,15 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .container {
   display: inline-flex;
   flex-wrap: wrap;
@@ -119,9 +136,20 @@ export default class Home extends Vue {
 
 .moves {
   color: white;
+  font-family: 'Exo 2';
   font-size: 4rem;
-  font-style: italic;
   margin: 1rem 0 0;
+}
+
+.actions {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  text-align: left;
+
+  .action {
+    color: #d7bfd2;
+  }
 }
 </style>
 
