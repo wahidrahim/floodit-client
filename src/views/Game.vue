@@ -25,7 +25,14 @@
     <h1 class="moves">{{ moves || '' }}</h1>
 
     <div v-if="gameOver" class="actions">
-      <span class="action">send challenge</span>
+      <span class="action">
+        <i class="mdi mdi-share-outline"></i>
+        send challenge
+      </span>
+      <span class="action">
+        <i class="mdi mdi-content-save-outline"></i>
+        save
+      </span>
     </div>
   </div>
 </template>
@@ -48,7 +55,7 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 3
+  private size = 1
   private moves = 0
   private gameOver = false
   private containerWidth = 0
@@ -143,9 +150,14 @@ export default class Home extends Vue {
 
 .actions {
   position: absolute;
-  left: 1rem;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  right: 0;
   bottom: 1rem;
+  padding: 0 1rem;
   text-align: left;
+  font-size: 1.2rem;
 
   .action {
     color: #d7bfd2;
