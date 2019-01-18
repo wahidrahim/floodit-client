@@ -1,40 +1,23 @@
-<template>
-  <div class="game" ref="game">
-    <div
-      class="container"
-      ref="container"
-      :style="{
-      'width': `${containerWidth}px`,
-      'height': `${containerWidth}px` }"
-    >
-      <template v-for="x in size">
-        <template v-for="y in size">
-          <cell
-            :row="x"
-            :col="y"
-            :size="size"
-            :containerWidth="containerWidth"
-            :key="`r${x}c${y}`"
-            :ref="`r${x}c${y}`"
-            @changeColor="changeColor"
-          />
-        </template>
-      </template>
-    </div>
-    <colors @changeColor="changeColor"/>
-    <h1 class="moves">{{ moves || '' }}</h1>
+<template lang="pug">
+  .game(ref='game')
+    .container(ref='container', :style="{\
+    'width': `${containerWidth}px`,\
+    'height': `${containerWidth}px` }")
+      template(v-for='x in size')
+        template(v-for='y in size')
+          cell(:row='x', :col='y', :size='size', :containerWidth='containerWidth', :key='`r${x}c${y}`', :ref='`r${x}c${y}`', @changeColor='changeColor')
 
-    <div v-if="gameOver" class="actions">
-      <span class="action">
-        <i class="mdi mdi-share-outline"></i>
-        send challenge
-      </span>
-      <span class="action">
-        <i class="mdi mdi-content-save-outline"></i>
-        save
-      </span>
-    </div>
-  </div>
+    colors(@changeColor='changeColor')
+
+    h1.moves {{ moves || '' }}
+
+    .actions(v-if='gameOver')
+      span.action
+        i.mdi.mdi-share-outline
+        |  send challenge
+      span.action
+        i.mdi.mdi-content-save-outline
+        |  save
 </template>
 
 <script lang="ts">
@@ -55,7 +38,7 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 1
+  private size = 2
   private moves = 0
   private gameOver = false
   private containerWidth = 0
@@ -121,47 +104,42 @@ export default class Home extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.game {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  text-align: center;
-}
+<style lang="sass" scoped>
+.game 
+  position: relative
+  width: 100%
+  height: 100%
+  max-width: 480px
+  margin: 0 auto
+  text-align: center
 
-.container {
-  display: inline-flex;
-  flex-wrap: wrap;
-  box-shadow: 0 2px 32px rgba(black, 0.5);
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  overflow: hidden;
-  white-space: nowrap;
-}
+.container
+  display: inline-flex
+  flex-wrap: wrap
+  box-shadow: 0 2px 32px rgba(black, 0.5)
+  border-radius: 0.5rem
+  margin-top: 1rem
+  overflow: hidden
+  white-space: nowrap
 
-.moves {
-  color: white;
-  font-family: 'Exo 2';
-  font-size: 4rem;
-  margin: 1rem 0 0;
-}
+.moves 
+  color: white
+  font-family: 'Exo 2'
+  font-size: 4rem
+  margin: 1rem 0 0
 
-.actions {
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  left: 0;
-  right: 0;
-  bottom: 1rem;
-  padding: 0 1rem;
-  text-align: left;
-  font-size: 1.2rem;
+.actions 
+  position: absolute
+  display: flex
+  justify-content: space-between
+  left: 0
+  right: 0
+  bottom: 1rem
+  padding: 0 1rem
+  text-align: left
+  font-size: 1.2rem
 
-  .action {
-    color: #d7bfd2;
-  }
-}
+  .action
+    color: #d7bfd2
 </style>
 

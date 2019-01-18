@@ -1,13 +1,11 @@
-<template>
-  <div
-    class="cell"
-    :style="{ 
-      'background-color': colorString,
-      'width': `${width}px`,
-      'height': `${width}px`
-     }"
-    @click="$emit('changeColor', color)"
-  ></div>
+<template lang="pug">
+  .cell(
+    @click="$emit('changeColor', color)",
+    :style="{\
+      'background-color': colorString,\
+      'width': `${width}px`,\
+      'height': `${width}px`\
+    }")
 </template>
 
 <script lang="ts">
@@ -82,20 +80,8 @@ export default class Cell extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.cell {
-  display: inline-block;
-  vertical-align: top;
-
-  // @media all and (orientation: landscape) {
-  //   $size: calc((100vh - 3rem) / 14);
-  //   width: $size;
-  //   height: $size;
-  // }
-  // @media all and (orientation: portrait) {
-  //   $size: calc((100vw - 3rem) / 14);
-  //   width: $size;
-  //   height: $size;
-  // }
-}
+<style lang="sass" scoped>
+.cell
+  display: inline-block
+  vertical-align: top
 </style>
