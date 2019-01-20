@@ -3,24 +3,26 @@
     router-view
 </template>
 
-<style lang="sass">
-html
-  box-sizing: border-box
-  height: 100%
+<style lang="scss">
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
 
 *,
 *:before,
-*:after
-  box-sizing: inherit
+*:after {
+  box-sizing: inherit;
+}
 
-body
-  background: #4c484f
-  margin: 0
-  height: 100%
-  font-family: 'Open Sans'
+body {
+  background: #4c484f;
+  margin: 0;
+  height: 100%;
+  font-family: 'Open Sans';
 }
 
 #app {
-  height: 100%
+  height: 100%;
 }
 </style>

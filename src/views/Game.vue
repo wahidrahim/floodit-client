@@ -1,23 +1,29 @@
 <template lang="pug">
   .game(ref='game')
     .container(ref='container', :style="{\
-    'width': `${containerWidth}px`,\
-    'height': `${containerWidth}px` }")
+      'width': `${containerWidth}px`,\
+      'height': `${containerWidth}px` }")
+      
       template(v-for='x in size')
         template(v-for='y in size')
-          cell(:row='x', :col='y', :size='size', :containerWidth='containerWidth', :key='`r${x}c${y}`', :ref='`r${x}c${y}`', @changeColor='changeColor')
+          cell(:row='x', :col='y',
+            :size='size',
+            :containerWidth='containerWidth',
+            :key='`r${x}c${y}`',
+            :ref='`r${x}c${y}`',
+            @changeColor='changeColor')
+
+      .actions(v-if='gameOver', :style="{ color: actionColor }")
+        .action(@click="")
+          i.mdi.mdi-sword-cross
+          |  Send Challenge
+        .action(@click="")
+          i.mdi.mdi-content-save-outline
+          |  Save
 
     colors(@changeColor='changeColor')
 
     h1.moves {{ moves || '' }}
-
-    .actions(v-if='gameOver')
-      span.action
-        i.mdi.mdi-share-outline
-        |  send challenge
-      span.action
-        i.mdi.mdi-content-save-outline
-        |  save
 </template>
 
 <script lang="ts">
@@ -33,12 +39,12 @@ import Colors from '@/components/Colors.vue'
   }
 })
 export default class Home extends Vue {
-  public $refs!: {
+  $refs!: {
     container: HTMLElement
     [key: string]: any
   }
 
-  private size = 2
+  private size = 14
   private moves = 0
   private gameOver = false
   private containerWidth = 0
@@ -104,42 +110,45 @@ export default class Home extends Vue {
 }
 </script>
 
-<style lang="sass" scoped>
-.game 
-  position: relative
-  width: 100%
-  height: 100%
-  max-width: 480px
-  margin: 0 auto
-  text-align: center
+<style lang="scss" scoped>
+.game {
+  width: 100%;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
 
-.container
-  display: inline-flex
-  flex-wrap: wrap
-  box-shadow: 0 2px 32px rgba(black, 0.5)
-  border-radius: 0.5rem
-  margin-top: 1rem
-  overflow: hidden
-  white-space: nowrap
+.container {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 32px rgba(black, 0.2);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
-.moves 
-  color: white
-  font-family: 'Exo 2'
-  font-size: 4rem
-  margin: 1rem 0 0
+.moves {
+  color: white;
+  font-family: 'Exo 2';
+  font-style: italic;
+  font-size: 4rem;
+  margin: 1rem 0 0;
+}
 
-.actions 
-  position: absolute
-  display: flex
-  justify-content: space-between
-  left: 0
-  right: 0
-  bottom: 1rem
-  padding: 0 1rem
-  text-align: left
-  font-size: 1.2rem
+.actions {
+  position: absolute;
+  font-size: 2rem;
+  align-self: center;
+  left: 0;
+  right: 0;
+  color: #000;
 
-  .action
-    color: #d7bfd2
+  .action {
+    margin: 1rem;
+  }
+}
 </style>
 
