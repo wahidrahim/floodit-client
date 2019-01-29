@@ -13,11 +13,11 @@
             :ref='`r${x}c${y}`',
             @changeColor='changeColor')
 
-      .actions(v-if='gameOver', :style="{ color: actionColor }")
+      .actions(v-if='gameOver')
         .action(@click="")
           i.mdi.mdi-sword-cross
           |  Send Challenge
-        .action(@click="")
+        .action(@click="save")
           i.mdi.mdi-content-save-outline
           |  Save
 
@@ -44,10 +44,11 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 14
+  private size = 2
   private moves = 0
   private gameOver = false
   private containerWidth = 0
+  private cells: number[][] = []
 
   private beforeMount() {
     const MAX_WIDTH = 480
@@ -60,8 +61,10 @@ export default class Home extends Vue {
   }
 
   private mounted() {
-    // set neighbors
+    // set neighbors and record cell matrix
     for (let r = 1; r <= this.size; r++) {
+      this.cells[r - 1] = []
+
       for (let c = 1; c <= this.size; c++) {
         const cell = this.getCellComponent(r, c)
 
@@ -71,6 +74,8 @@ export default class Home extends Vue {
           this.getCellComponent(r, c + 1), // right
           this.getCellComponent(r + 1, c) // bottom
         ])
+
+        this.cells[r - 1][c - 1] = cell.color
       }
     }
   }
@@ -106,6 +111,14 @@ export default class Home extends Vue {
     const cell = this.$refs[`r${row}c${col}`] as any[]
 
     return cell ? cell[0] : null
+  }
+
+  private save() {
+    const data = {
+      size: this.size,
+      moves: this.moves,
+      cells: this.cells
+    }
   }
 }
 </script>
@@ -148,6 +161,12 @@ export default class Home extends Vue {
 
   .action {
     margin: 1rem;
+
+    &:hover {
+      cursor: pointer;
+      color: white;
+      text-shadow: 0 0 3px #000;
+    }
   }
 }
 </style>
