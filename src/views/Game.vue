@@ -16,10 +16,10 @@
       .actions(v-if='gameOver')
         .action(@click="")
           i.mdi.mdi-sword-cross
-          |  Send Challenge
+          |&nbsp;Send Challenge
         .action(@click="save")
           i.mdi.mdi-content-save-outline
-          |  Save
+          |&nbsp;Save
 
     colors(@changeColor='changeColor')
 
@@ -28,6 +28,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import axios from 'axios'
 
 import Cell from '@/components/Cell.vue'
 import Colors from '@/components/Colors.vue'
@@ -44,7 +45,7 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 2
+  private size = 3
   private moves = 0
   private gameOver = false
   private containerWidth = 0
@@ -113,12 +114,14 @@ export default class Home extends Vue {
     return cell ? cell[0] : null
   }
 
-  private save() {
+  private async save() {
     const data = {
       size: this.size,
       moves: this.moves,
       cells: this.cells
     }
+
+    const response = await axios.post('//localhost:9090/save', data)
   }
 }
 </script>
