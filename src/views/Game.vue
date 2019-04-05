@@ -13,7 +13,7 @@
             :ref='`r${x}c${y}`',
             @changeColor='changeColor')
 
-      .actions(v-if='gameOver', :style="{ color: actionColor }")
+      .actions(v-if='gameOver')
         .action(@click="")
           i.mdi.mdi-sword-cross
           |  Send Challenge
@@ -39,12 +39,12 @@ import Colors from '@/components/Colors.vue'
   }
 })
 export default class Home extends Vue {
-  $refs!: {
+  public $refs!: {
     container: HTMLElement
     [key: string]: any
   }
 
-  private size = 14
+  private size = 2
   private moves = 0
   private gameOver = false
   private containerWidth = 0
