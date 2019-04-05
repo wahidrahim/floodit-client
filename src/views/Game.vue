@@ -102,7 +102,7 @@ export default class Home extends Vue {
     }
   }
 
-  private getCellComponent(row: number, col: number): any {
+  private getCellComponent(row: number, col: number) {
     const cell = this.$refs[`r${row}c${col}`] as any[]
 
     return cell ? cell[0] : null

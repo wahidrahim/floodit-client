@@ -47,6 +47,10 @@ export default class Cell extends Vue {
 
   private width = 0
 
+  public setNeighbors(neighbors: any) {
+    this.neighbors = neighbors
+  }
+
   private get colorString() {
     return COLORS[this.color]
   }
@@ -63,10 +67,6 @@ export default class Cell extends Vue {
 
     this.color = color
     this.notified = false
-  }
-
-  private setNeighbors(neighbors: any) {
-    this.neighbors = neighbors
   }
 
   private created() {
