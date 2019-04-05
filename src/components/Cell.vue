@@ -32,18 +32,18 @@ const getRandomColor = () => {
 
 @Component
 export default class Cell extends Vue {
-  color = 0
-  neighbors = []
-  notified = false
+  @Prop()
+  private row!: number
+  @Prop()
+  private col!: number
+  @Prop()
+  private size!: number
+  @Prop()
+  private containerWidth!: number
 
-  @Prop()
-  row!: number
-  @Prop()
-  col!: number
-  @Prop()
-  size!: number
-  @Prop()
-  containerWidth!: number
+  private color = 0
+  private neighbors = []
+  private notified = false
 
   private width = 0
 
@@ -51,7 +51,7 @@ export default class Cell extends Vue {
     return COLORS[this.color]
   }
 
-  changeColor(color: number) {
+  private changeColor(color: number) {
     this.notified = true
 
     // notifying neighbors
@@ -65,7 +65,7 @@ export default class Cell extends Vue {
     this.notified = false
   }
 
-  setNeighbors(neighbors: any) {
+  private setNeighbors(neighbors: any) {
     this.neighbors = neighbors
   }
 
