@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import { AxiosInstance } from 'axios'
+import { AxiosStatic } from 'axios'
 
 declare module 'vue/types/vue' {
+  /* tslint:disable */
   interface Vue {
-    $api: AxiosInstance
+    $api: AxiosStatic
   }
 }

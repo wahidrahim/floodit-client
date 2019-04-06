@@ -121,6 +121,7 @@ export default class Home extends Vue {
     console.log('posting', score)
 
     const res = await this.$api.post('/scores', score)
+    this.$router.push('/scores')
 
     console.log(res)
   }
@@ -165,6 +166,10 @@ export default class Home extends Vue {
 
   .action {
     margin: 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 </style>
