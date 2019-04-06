@@ -4,7 +4,13 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 
+import axios from 'axios'
+
 Vue.config.productionTip = false;
+
+Vue.prototype.$api = axios.create({
+  baseURL: '//localhost:3000/api'
+})
 
 new Vue({
   router,

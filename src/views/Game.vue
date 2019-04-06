@@ -17,7 +17,7 @@
         .action(@click="")
           i.mdi.mdi-sword-cross
           |  Send Challenge
-        .action(@click="")
+        .action(@click="save")
           i.mdi.mdi-content-save-outline
           |  Save
 
@@ -46,6 +46,7 @@ export default class Home extends Vue {
 
   private size = 2
   private moves = 0
+  private board: number[] = []
   private gameOver = false
   private containerWidth = 0
 
@@ -71,6 +72,8 @@ export default class Home extends Vue {
           this.getCellComponent(r, c + 1), // right
           this.getCellComponent(r + 1, c) // bottom
         ])
+
+        this.board.push(cell.color)
       }
     }
   }
@@ -106,6 +109,18 @@ export default class Home extends Vue {
     const cell = this.$refs[`r${row}c${col}`] as any[]
 
     return cell ? cell[0] : null
+  }
+
+  private async save() {
+    const score = {
+      size: this.size,
+      moves: this.moves,
+      board: this.board
+    }
+
+    console.log('posting', score)
+
+    const res = await this.$api.post('/scores', score)
   }
 }
 </script>
