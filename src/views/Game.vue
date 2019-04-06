@@ -121,6 +121,8 @@ export default class Home extends Vue {
     console.log('posting', score)
 
     const res = await this.$api.post('/scores', score)
+
+    console.log(res)
   }
 }
 </script>
