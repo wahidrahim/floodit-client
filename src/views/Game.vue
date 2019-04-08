@@ -112,7 +112,7 @@ export default class Home extends Vue {
   }
 
   private async save() {
-    const score = {
+    const score: IScore = {
       size: this.size,
       moves: this.moves,
       board: this.board

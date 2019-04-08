@@ -7,7 +7,7 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class Scores extends Vue {
-  public scores: any[] = []
+  public scores: IScore[] = []
 
   private async created() {
     const res = await this.$api.get('/scores')
