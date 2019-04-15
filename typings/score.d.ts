@@ -3,5 +3,5 @@ declare interface IScore {
   size: number
   board: number[]
   moves: number
-  player: string
+  player?: string
 }
