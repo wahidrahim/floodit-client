@@ -44,7 +44,7 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 2
+  private size = 14
   private moves = 0
   private board: number[] = []
   private gameOver = false

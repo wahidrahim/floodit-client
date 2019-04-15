@@ -3,7 +3,7 @@
     span.size {{ size }}x{{ size }}
     .board
       template(v-for='(color, i) in board')
-        .cell(:style='{ backgroundColor: colorString(color) }')
+        .cell(:style='{ backgroundColor: colorString(color) }' :key='i')
         br(v-if='(i + 1) % size === 0')
 </template>
 

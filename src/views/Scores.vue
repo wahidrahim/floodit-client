@@ -28,6 +28,8 @@ export default class Scores extends Vue {
 
 <style lang="scss" scoped>
 #scores {
+  display: flex;
+  flex-wrap: wrap;
   padding: 1rem;
 
   .score {
