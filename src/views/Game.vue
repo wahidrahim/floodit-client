@@ -17,7 +17,7 @@
         .action(@click="")
           i.mdi.mdi-sword-cross
           |  Send Challenge
-        .action(@click="save")
+        .action(@click="showSaveScoreModal = true")
           i.mdi.mdi-content-save-outline
           |  Save
 
@@ -25,7 +25,7 @@
 
     h1.moves {{ moves || '' }}
 
-    save-score-modal
+    save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
 </template>
 
 <script lang="ts">
@@ -48,10 +48,11 @@ export default class Home extends Vue {
     [key: string]: any
   }
 
-  private size = 2
+  private size = 14
   private moves = 0
   private board: number[] = []
   private gameOver = false
+  private showSaveScoreModal = false
   private containerWidth = 0
 
   private beforeMount() {
@@ -113,21 +114,6 @@ export default class Home extends Vue {
     const cell = this.$refs[`r${row}c${col}`] as any[]
 
     return cell ? cell[0] : null
-  }
-
-  private async save() {
-    const score: IScore = {
-      size: this.size,
-      moves: this.moves,
-      board: this.board
-    }
-
-    console.log('posting', score)
-
-    const res = await this.$api.post('/scores', score)
-    this.$router.push('/scores')
-
-    console.log(res)
   }
 }
 </script>

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class SaveScoreModal extends Vue {
@@ -15,12 +15,32 @@ export default class SaveScoreModal extends Vue {
   }
   public player = ''
 
+  @Prop()
+  public moves!: number
+
+  @Prop()
+  public size!: number
+
+  @Prop()
+  public board!: number[]
+
   public mounted() {
     this.$refs.input.focus()
   }
 
   public async save() {
-    const res = await this.$api.post('/score')
+    const res = await this.$api.post('/scores', {
+      score: {
+        moves: this.moves,
+        player: this.player
+      },
+      board: {
+        size: this.size,
+        cells: this.board
+      }
+    })
+
+    this.$emit('close')
   }
 }
 </script>
@@ -50,7 +70,7 @@ export default class SaveScoreModal extends Vue {
       font-size: 2rem;
       border: none;
       border-radius: 0.5rem;
-      background: rgba(white, 0.9);
+      background: white;
       color: black;
       padding: 0.5rem 1rem;
       width: calc(100% - 4rem);
