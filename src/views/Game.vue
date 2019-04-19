@@ -24,6 +24,8 @@
     colors(@changeColor='changeColor')
 
     h1.moves {{ moves || '' }}
+
+    save-score-modal
 </template>
 
 <script lang="ts">
@@ -31,11 +33,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 
 import Cell from '@/components/Cell.vue'
 import Colors from '@/components/Colors.vue'
+import SaveScoreModal from '@/components/SaveScoreModal.vue'
 
 @Component({
   components: {
     Cell,
-    Colors
+    Colors,
+    SaveScoreModal
   }
 })
 export default class Home extends Vue {
