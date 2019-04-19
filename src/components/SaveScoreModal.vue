@@ -29,18 +29,22 @@ export default class SaveScoreModal extends Vue {
   }
 
   public async save() {
-    const res = await this.$api.post('/scores', {
-      score: {
-        moves: this.moves,
-        player: this.player
-      },
-      board: {
-        size: this.size,
-        cells: this.board
-      }
-    })
+    try {
+      const res = await this.$api.post('/scores', {
+        score: {
+          moves: this.moves,
+          player: this.player
+        },
+        board: {
+          size: this.size,
+          cells: this.board
+        }
+      })
 
-    this.$emit('close')
+      this.$emit('close')
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 </script>
