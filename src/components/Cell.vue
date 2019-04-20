@@ -1,88 +1,76 @@
 <template lang="pug">
-  .cell(
-    @click="$emit('changeColor', color)",
-    :style="{\
-      'background-color': colorString,\
-      'width': `${width}px`,\
-      'height': `${width}px`\
-    }")
+.cell(:style='{ backgroundColor: computedColor }')
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import store from '@/store'
 
-const COLORS = [
-  '#ff00e7',
-  '#ff8100',
-  '#e3ff00',
-  '#00ff57',
-  '#00c5ff',
-  '#a300ff'
-]
-
-const getRandomInt = (min: number, max: number) => {
+function getRandomInt(min: number, max: number) {
   min = Math.ceil(min)
   max = Math.floor(max)
   return Math.floor(Math.random() * (max - min)) + min // [min, max)
 }
 
-const getRandomColor = () => {
-  return getRandomInt(0, COLORS.length)
+function getRandomColor(colors: string[]) {
+  return colors[getRandomInt(0, colors.length)]
 }
 
 @Component
 export default class Cell extends Vue {
   @Prop()
-  private row!: number
-  @Prop()
-  private col!: number
-  @Prop()
-  private size!: number
-  @Prop()
-  private containerWidth!: number
+  public color!: string
 
-  private color = 0
-  private neighbors = []
-  private notified = false
-
-  private width = 0
-
-  public setNeighbors(neighbors: any) {
-    this.neighbors = neighbors
+  /**
+   * Get all possible cell colors
+   */
+  get colors() {
+    return this.$store.getters.colors
   }
 
-  private get colorString() {
-    return COLORS[this.color]
+  /**
+   * If a color is provided - use that color;
+   * otherwise, give itself a random color
+   */
+  get computedColor() {
+    return this.color ? this.color : getRandomColor(this.colors)
   }
 
-  private changeColor(color: number) {
-    this.notified = true
-
-    // notifying neighbors
-    this.neighbors.forEach((neighbor: any) => {
-      if (neighbor && neighbor.color === this.color && !neighbor.notified) {
-        neighbor.changeColor(color)
-      }
-    })
-
-    this.color = color
-    this.notified = false
-  }
-
-  private created() {
-    this.color = getRandomColor()
-  }
-
-  private mounted() {
-    // portrait
-    this.width = this.containerWidth / this.size
-  }
+  // private color = 0
+  // private neighbors = []
+  // private notified = false
+  // private width = 0
+  // public setNeighbors(neighbors: any) {
+  //   this.neighbors = neighbors
+  // }
+  // private get colorString() {
+  //   return COLORS[this.color]
+  // }
+  // private changeColor(color: number) {
+  //   this.notified = true
+  //   // notifying neighbors
+  //   this.neighbors.forEach((neighbor: any) => {
+  //     if (neighbor && neighbor.color === this.color && !neighbor.notified) {
+  //       neighbor.changeColor(color)
+  //     }
+  //   })
+  //   this.color = color
+  //   this.notified = false
+  // }
+  // private created() {
+  //   this.color = getRandomColor()
+  // }
+  // private mounted() {
+  //   console.log('cell mounted');
+  //   // portrait
+  //   this.width = this.containerWidth / this.size
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
 .cell {
-  display: inline-block;
-  vertical-align: top;
+  width: 100%;
+  height: 100%;
 }
 </style>
