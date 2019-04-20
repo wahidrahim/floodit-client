@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
-import Board from '@/components/Board.vue'
+import Board from '@/components/StaticBoard.vue'
 
 @Component({
   components: { Board }

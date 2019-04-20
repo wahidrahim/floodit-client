@@ -1,9 +1,14 @@
 <template lang="pug">
-  .game(ref='game')
-    .container(ref='container', :style="{\
-      'width': `${containerWidth}px`,\
-      'height': `${containerWidth}px` }")
+  #game
+    //- Container width is calculated before mount.
+    .container(
+      :style='{\
+        width: `${containerWidth}px`,\
+        height: `${containerWidth}px`\
+      }')
       
+      //- Cells are rendered "linearly". They wrap to the
+          next row based on their width (calculated in Cell.vue)
       template(v-for='x in size')
         template(v-for='y in size')
           cell(:row='x', :col='y',
@@ -13,6 +18,7 @@
             :ref='`r${x}c${y}`',
             @changeColor='changeColor')
 
+      //- TODO: make separate component
       .actions(v-if='gameOver')
         .action(@click="")
           i.mdi.mdi-sword-cross
@@ -25,6 +31,7 @@
 
     h1.moves {{ moves || '' }}
 
+    //- TODO: get these states from vuex store
     save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
 </template>
 
@@ -45,9 +52,10 @@ import SaveScoreModal from '@/components/SaveScoreModal.vue'
 export default class Home extends Vue {
   public $refs!: {
     container: HTMLElement
-    [key: string]: any
+    [key: string]: any // r1c1, r1c2, r1c3, ... ,r(SIZE)c(SIZE)
   }
 
+  // TODO: Store them in vuex store
   private size = 14
   private moves = 0
   private board: number[] = []
@@ -55,6 +63,9 @@ export default class Home extends Vue {
   private showSaveScoreModal = false
   private containerWidth = 0
 
+  /**
+   * Set the width of the board
+   */
   private beforeMount() {
     const MAX_WIDTH = 480
     const PADDING = 32
@@ -65,8 +76,10 @@ export default class Home extends Vue {
         : MAX_WIDTH - PADDING
   }
 
+  /**
+   * Set the neighbours of each cell
+   */
   private mounted() {
-    // set neighbors
     for (let r = 1; r <= this.size; r++) {
       for (let c = 1; c <= this.size; c++) {
         const cell = this.getCellComponent(r, c)
@@ -78,6 +91,7 @@ export default class Home extends Vue {
           this.getCellComponent(r + 1, c) // bottom
         ])
 
+        // save the numeric representation of the initilized board
         this.board.push(cell.color)
       }
     }
@@ -110,6 +124,9 @@ export default class Home extends Vue {
     }
   }
 
+  /**
+   * Helper method to return the Cell vue component
+   */
   private getCellComponent(row: number, col: number) {
     const cell = this.$refs[`r${row}c${col}`] as any[]
 
@@ -119,7 +136,7 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.game {
+#game {
   width: 100%;
   height: 100%;
   max-width: 480px;
