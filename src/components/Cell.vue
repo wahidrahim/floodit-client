@@ -1,39 +1,50 @@
 <template lang="pug">
-.cell(:style='{ backgroundColor: computedColor }')
+.cell(:style='{ backgroundColor: colorString }')
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import store from '@/store'
 
-function getRandomInt(min: number, max: number) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min)) + min // [min, max)
-}
-
-function getRandomColor(colors: string[]) {
-  return colors[getRandomInt(0, colors.length)]
-}
-
 @Component
 export default class Cell extends Vue {
+  public neighbors = []
+
   @Prop()
-  public color!: string
+  public color!: number
 
   /**
    * Get all possible cell colors
    */
-  get colors() {
+  get colors(): string[] {
     return this.$store.getters.colors
+}
+
+  /**
+   * Index of the color from the possible colors
+   */
+  get colorIndex() {
+    return this.colors.indexOf(this.colorString)
   }
 
   /**
-   * If a color is provided - use that color;
+   * If a color is provided - use that color as an index;
    * otherwise, give itself a random color
    */
-  get computedColor() {
-    return this.color ? this.color : getRandomColor(this.colors)
+  public get colorString() {
+    const min = 0
+    const max = this.colors.length
+    const randomInt = Math.floor(Math.random() * (max - min)) + min // [min, max)
+    const randomColor = this.colors[randomInt]
+
+    return this.color ? this.colors[this.color] : randomColor
+  }
+
+  /**
+   * Setting
+   */
+  public setNeighbors(neighbors: []) {
+    this.neighbors = neighbors
   }
 
   // private color = 0

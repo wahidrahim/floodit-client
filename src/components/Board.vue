@@ -4,7 +4,7 @@
     tr(v-for='row in size')
       td(v-for='col in size')
         //- give the cell a color (static), or the cell will give itself a random color (live)
-        cell
+        cell(:ref='`r${row}c${col}`')
 </template>
 
 <script lang="ts">
@@ -16,9 +16,17 @@ import Cell from '@/components/Cell.vue'
   components: { Cell }
 })
 export default class Board extends Vue {
-  private size = 2
-  private boardWidth = 0
+  public $refs!: {
+    [key: string]: any // r1c1, r1c2, r1c3, ... ,r(SIZE)c(SIZE)
+  }
 
+  private size = 3
+  private boardWidth = 0
+  private initialBoard: number[] = []
+
+  /**
+   * Set the size of the board to fit mobile screens
+   */
   private beforeMount() {
     const MAX_WIDTH = 480
     const PADDING = 32
@@ -27,6 +35,37 @@ export default class Board extends Vue {
       document.body.clientWidth < MAX_WIDTH
         ? document.body.clientWidth - PADDING
         : MAX_WIDTH - PADDING
+  }
+
+  /**
+   * Set the neighbors of each cell,
+   * and save the initial board as a number[]
+   */
+  private mounted() {
+    for (let r = 1; r <= this.size; r++) {
+      for (let c = 1; c <= this.size; c++) {
+        const cell = this.getCellComponent(r, c)
+
+        cell.setNeighbors([
+          this.getCellComponent(r, c - 1), // left
+          this.getCellComponent(r - 1, c), // top
+          this.getCellComponent(r, c + 1), // right
+          this.getCellComponent(r + 1, c) // bottom
+        ])
+
+        // save the numeric representation of the initilized board
+        this.initialBoard.push(cell.colorIndex)
+      }
+    }
+  }
+
+  /**
+   * Helper method to return the Cell vue component
+   */
+  private getCellComponent(row: number, col: number) {
+    const cell = this.$refs[`r${row}c${col}`] as any[]
+
+    return cell ? cell[0] : null
   }
 }
 </script>

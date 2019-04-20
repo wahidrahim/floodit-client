@@ -7,7 +7,6 @@ export default new Vuex.Store({
   state: {
     colors: [
       '#ff00e7',
-      '#ff00e7',
       '#ff8100',
       '#e3ff00',
       '#00ff57',
