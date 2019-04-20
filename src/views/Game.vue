@@ -1,6 +1,7 @@
 <template lang="pug">
   #game
     //- Container width is calculated before mount.
+    board
     .container(
       :style='{\
         width: `${containerWidth}px`,\
@@ -38,6 +39,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
+import Board from '@/components/Board.vue'
 import Cell from '@/components/Cell.vue'
 import Colors from '@/components/Colors.vue'
 import SaveScoreModal from '@/components/SaveScoreModal.vue'
@@ -46,7 +48,8 @@ import SaveScoreModal from '@/components/SaveScoreModal.vue'
   components: {
     Cell,
     Colors,
-    SaveScoreModal
+    SaveScoreModal,
+    Board
   }
 })
 export default class Home extends Vue {
