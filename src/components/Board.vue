@@ -4,7 +4,7 @@
     tr(v-for='row in size')
       td(v-for='col in size')
         //- give the cell a color (static), or the cell will give itself a random color (live)
-        cell(:ref='`r${row}c${col}`')
+        cell(:ref='`r${row}c${col}`' @changeColor='changeColor')
 </template>
 
 <script lang="ts">
@@ -59,11 +59,19 @@ export default class Board extends Vue {
     }
   }
 
+  private changeColor(colorIndex: number) {
+    const firstCell = this.getCellComponent(1, 1)
+
+    if (colorIndex !== firstCell.colorIndex) {
+      firstCell.changeColor(colorIndex)
+    }
+  }
+
   /**
    * Helper method to return the Cell vue component
    */
-  private getCellComponent(row: number, col: number) {
-    const cell = this.$refs[`r${row}c${col}`] as any[]
+  private getCellComponent(row: number, col: number): ICell {
+    const cell = this.$refs[`r${row}c${col}`]
 
     return cell ? cell[0] : null
   }

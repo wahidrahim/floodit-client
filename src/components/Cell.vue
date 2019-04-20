@@ -1,5 +1,5 @@
 <template lang="pug">
-.cell(:style='{ backgroundColor: colorString }')
+.cell(:style='{ backgroundColor: colorString }', @click='$emit("changeColor", colorIndex)')
 </template>
 
 <script lang="ts">
@@ -7,44 +7,67 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import store from '@/store'
 
 @Component
-export default class Cell extends Vue {
+export default class Cell extends Vue implements ICell {
   public neighbors = []
-
-  @Prop()
-  public color!: number
+  public notified = false
+  public colorIndex = 0
 
   /**
    * Get all possible cell colors
    */
   get colors(): string[] {
     return this.$store.getters.colors
-}
-
-  /**
-   * Index of the color from the possible colors
-   */
-  get colorIndex() {
-    return this.colors.indexOf(this.colorString)
   }
 
   /**
-   * If a color is provided - use that color as an index;
-   * otherwise, give itself a random color
+   * Set a random color for this cell
    */
-  public get colorString() {
+  public created() {
     const min = 0
     const max = this.colors.length
     const randomInt = Math.floor(Math.random() * (max - min)) + min // [min, max)
-    const randomColor = this.colors[randomInt]
 
-    return this.color ? this.colors[this.color] : randomColor
+    this.colorIndex = randomInt
   }
 
   /**
-   * Setting
+   * Returns the hex string value of the color specified by colorIndex
+   */
+  public get colorString() {
+    return this.colors[this.colorIndex]
+  }
+
+  /**
+   * Set this cells neighbors - provided by parent (Board.vue)
    */
   public setNeighbors(neighbors: []) {
     this.neighbors = neighbors
+  }
+
+  /**
+   * Change this cells color and notify it's neigbors
+   */
+  public changeColor(colorIndex: number) {
+    this.notified = true
+    this.notifyNeighbors(colorIndex)
+    this.colorIndex = colorIndex
+    this.notified = false
+  }
+
+  /**
+   * Notify this cells neighbors to change color
+   * Iff the neighbor is of matching color
+   */
+  private notifyNeighbors(colorIndex: number) {
+    this.neighbors.forEach((neighbor: ICell) => {
+      if (
+        neighbor &&
+        neighbor.colorIndex === this.colorIndex &&
+        !neighbor.notified
+      ) {
+        neighbor.changeColor(colorIndex)
+      }
+    })
   }
 
   // private color = 0

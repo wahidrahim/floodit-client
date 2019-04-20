@@ -67,19 +67,6 @@ export default class Home extends Vue {
   private containerWidth = 0
 
   /**
-   * Set the width of the board
-   */
-  private beforeMount() {
-    const MAX_WIDTH = 480
-    const PADDING = 32
-
-    this.containerWidth =
-      document.body.clientWidth < MAX_WIDTH
-        ? document.body.clientWidth - PADDING
-        : MAX_WIDTH - PADDING
-  }
-
-  /**
    * Set the neighbours of each cell
    */
   // private mounted() {
@@ -100,7 +87,7 @@ export default class Home extends Vue {
   //   }
   // }
 
-  private changeColor(color: number) {
+  public changeColor(color: number) {
     const firstCell = this.getCellComponent(1, 1)
 
     if (color !== firstCell.color && !this.gameOver) {
@@ -125,6 +112,19 @@ export default class Home extends Vue {
         this.gameOver = true
       }
     }
+  }
+
+  /**
+   * Set the width of the board
+   */
+  private beforeMount() {
+    const MAX_WIDTH = 480
+    const PADDING = 32
+
+    this.containerWidth =
+      document.body.clientWidth < MAX_WIDTH
+        ? document.body.clientWidth - PADDING
+        : MAX_WIDTH - PADDING
   }
 
   /**
