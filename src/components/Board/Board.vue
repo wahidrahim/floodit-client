@@ -3,7 +3,9 @@
   table(:style='{ width: `${boardWidth}px`, height: `${boardWidth}px` }')
     tr(v-for='row in size')
       td(v-for='col in size')
-        cell(:ref='`r${row}c${col}`' @changeColor='changeColor')
+        cell(:ref='`r${row}c${col}`',
+        :boardIndex='boardIndex(row, col)'
+        @changeColor='changeColor')
 </template>
 
 <script lang="ts">
@@ -22,6 +24,18 @@ export default class Board extends Vue {
   private size = 3
   private boardWidth = 0
   private initialBoard: number[] = []
+
+  /**
+   * Detects if game is over (all colors are the same)
+   */
+  // private get gameOver(): boolean {
+  //   let colors = []
+
+  //   for (let i = 0; i < this.size; i++) {
+  //   }
+
+  //   return true
+  // }
 
   /**
    * Set the size of the board to fit mobile screens
@@ -57,6 +71,8 @@ export default class Board extends Vue {
         this.initialBoard.push(cell.colorIndex)
       }
     }
+
+    this.$store.commit('setCurrentBoard', this.initialBoard)
   }
 
   /**
@@ -78,6 +94,14 @@ export default class Board extends Vue {
     const cell = this.$refs[`r${row}c${col}`]
 
     return cell ? cell[0] : null
+  }
+
+  /**
+   * Returns the 1d index of a `cell`
+   * based on it's `row` and `col`
+   */
+  private boardIndex(row: number, col: number) {
+    return this.size * row + col - this.size - 1
   }
 }
 </script>

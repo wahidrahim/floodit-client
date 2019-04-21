@@ -13,6 +13,13 @@ export default class Cell extends Vue implements ICell {
   private neighbors = []
 
   /**
+   * The index of this cell in the
+   * 1D representation of the `board`
+   */
+  @Prop({ required: true })
+  public boardIndex!: number
+
+  /**
    * Get all possible cell colors
    */
   private get colors(): string[] {
@@ -53,6 +60,11 @@ export default class Cell extends Vue implements ICell {
     this.notifyNeighbors(colorIndex)
     this.notified = false // ready to be notified again
     this.colorIndex = colorIndex
+
+    this.$store.commit('updateCurrentBoard', {
+      index: this.boardIndex,
+      colorIndex: this.colorIndex
+    })
   }
 
   /**

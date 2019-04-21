@@ -11,7 +11,7 @@
         i.mdi.mdi-content-save-outline
         |  Save
 
-    colors(@changeColor='changeColor')
+    colors
 
     h1.moves {{ moves || '' }}
 
