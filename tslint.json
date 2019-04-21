@@ -13,6 +13,7 @@
     "semicolon": false,
     "trailing-comma": false,
     "arrow-parens": true,
-    "no-console": false
+    "no-console": false,
+    "member-ordering": false
   }
 }

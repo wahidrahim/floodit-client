@@ -8,21 +8,28 @@ import store from '@/store'
 
 @Component
 export default class Cell extends Vue implements ICell {
-  public neighbors = []
-  public notified = false
   public colorIndex = 0
+  public notified = false
+  private neighbors = []
 
   /**
    * Get all possible cell colors
    */
-  get colors(): string[] {
+  private get colors(): string[] {
     return this.$store.getters.colors
+  }
+
+  /**
+   * Returns the hex string value of the color specified by colorIndex
+   */
+  private get colorString() {
+    return this.colors[this.colorIndex]
   }
 
   /**
    * Set a random color for this cell
    */
-  public created() {
+  private created() {
     const min = 0
     const max = this.colors.length
     const randomInt = Math.floor(Math.random() * (max - min)) + min // [min, max)
@@ -31,14 +38,7 @@ export default class Cell extends Vue implements ICell {
   }
 
   /**
-   * Returns the hex string value of the color specified by colorIndex
-   */
-  public get colorString() {
-    return this.colors[this.colorIndex]
-  }
-
-  /**
-   * Set this cells neighbors - provided by parent (Board.vue)
+   * Set this cells neighbors - provided by parent `Board`
    */
   public setNeighbors(neighbors: []) {
     this.neighbors = neighbors
@@ -46,17 +46,19 @@ export default class Cell extends Vue implements ICell {
 
   /**
    * Change this cells color and notify it's neigbors
+   * Initially called by `Board` for the top-left `Cell`
    */
   public changeColor(colorIndex: number) {
     this.notified = true
     this.notifyNeighbors(colorIndex)
+    this.notified = false // ready to be notified again
     this.colorIndex = colorIndex
-    this.notified = false
   }
 
   /**
    * Notify this cells neighbors to change color
    * Iff the neighbor is of matching color
+   * and has not already been notified
    */
   private notifyNeighbors(colorIndex: number) {
     this.neighbors.forEach((neighbor: ICell) => {
@@ -69,36 +71,6 @@ export default class Cell extends Vue implements ICell {
       }
     })
   }
-
-  // private color = 0
-  // private neighbors = []
-  // private notified = false
-  // private width = 0
-  // public setNeighbors(neighbors: any) {
-  //   this.neighbors = neighbors
-  // }
-  // private get colorString() {
-  //   return COLORS[this.color]
-  // }
-  // private changeColor(color: number) {
-  //   this.notified = true
-  //   // notifying neighbors
-  //   this.neighbors.forEach((neighbor: any) => {
-  //     if (neighbor && neighbor.color === this.color && !neighbor.notified) {
-  //       neighbor.changeColor(color)
-  //     }
-  //   })
-  //   this.color = color
-  //   this.notified = false
-  // }
-  // private created() {
-  //   this.color = getRandomColor()
-  // }
-  // private mounted() {
-  //   console.log('cell mounted');
-  //   // portrait
-  //   this.width = this.containerWidth / this.size
-  // }
 }
 </script>
 

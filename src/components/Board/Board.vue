@@ -27,8 +27,9 @@ export default class Board extends Vue {
    * Set the size of the board to fit mobile screens
    */
   private beforeMount() {
-    const maxWidth = 480 // px
-    const padding = 32 // px
+    // in pixels
+    const maxWidth = 480
+    const padding = 32
 
     this.boardWidth =
       document.body.clientWidth < maxWidth
@@ -37,8 +38,8 @@ export default class Board extends Vue {
   }
 
   /**
-   * Set the neighbors of each cell,
-   * and save the initial board as a number[]
+   * Set the neighbors of each `cell`,
+   * and save the initial `board` as a `number[]`
    */
   private mounted() {
     for (let r = 1; r <= this.size; r++) {
@@ -58,6 +59,10 @@ export default class Board extends Vue {
     }
   }
 
+  /**
+   * Changes the color of the top-left cell
+   * Iff the color picked is different than the top-left cell
+   */
   private changeColor(colorIndex: number) {
     const firstCell = this.getCellComponent(1, 1)
 
@@ -84,7 +89,7 @@ table {
 
   tr {
     td {
-      overflow: hidden; // makes the corner border radius visible
+      overflow: hidden; // makes the corner border radiuses visible
       padding: 0;
     }
 
