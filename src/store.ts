@@ -6,24 +6,33 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
-    currentBoard: [NaN],
-    uniqueColorsInBoard: []
+    currentBoard: [NaN]
   },
   getters: {
     colors: (state) => {
       return state.colors
     },
     currentBoard: (state) => state.currentBoard,
+    /**
+     * Detects when the game is over,
+     * by checking how manyunique colors are in the board.
+     * If there's only 1 color in the board, then game is over
+     */
     gameOver: (state) => {
+      const colors: number[] = []
+
       for (const color of state.currentBoard) {
-        if (!state.uniqueColorsInBoard.includes(color)) {
-          state.uniqueColorsInBoard.push(color)
-          console.log(state.uniqueColorsInBoard);
-          return false
+        if (!colors.includes(color)) {
+          colors.push(color)
+
+          // break as early as possible
+          if (colors.length > 1) {
+            break
+          }
         }
       }
 
-      return true
+      return colors.length > 1 ? false : true
     }
   },
   mutations: {

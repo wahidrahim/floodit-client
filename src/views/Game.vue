@@ -4,20 +4,20 @@
   board
 
   //- TODO: make separate component
-  .actions(v-if='gameOver')
-    .action(@click="")
-      i.mdi.mdi-sword-cross
-      |  Send Challenge
-    .action(@click="showSaveScoreModal = true")
-      i.mdi.mdi-content-save-outline
-      |  Save
+  // .actions(v-if='gameOver')
+  //   .action(@click="")
+  //     i.mdi.mdi-sword-cross
+  //     |  Send Challenge
+  //   .action(@click="showSaveScoreModal = true")
+  //     i.mdi.mdi-content-save-outline
+  //     |  Save
 
   colors
 
   h1.moves {{ moves || '' }}
 
   //- TODO: get these states from vuex store
-  save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
+  // save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
 </template>
 
 <script lang="ts">
@@ -35,20 +35,9 @@ import SaveScoreModal from '@/components/SaveScoreModal.vue'
   }
 })
 export default class Home extends Vue {
-  public $refs!: {
-    container: HTMLElement
-    [key: string]: any // r1c1, r1c2, r1c3, ... ,r(SIZE)c(SIZE)
-  }
-
-  // TODO: Store them in vuex store
-  private size = 14
   private moves = 0
-  private board: number[] = []
-  private showSaveScoreModal = false
-  private containerWidth = 0
 
   get gameOver() {
-    console.log(this.$store.getters.currentBoard)
     return this.$store.getters.gameOver
   }
 }
