@@ -26,18 +26,6 @@ export default class Board extends Vue {
   private initialBoard: number[] = []
 
   /**
-   * Detects if game is over (all colors are the same)
-   */
-  // private get gameOver(): boolean {
-  //   let colors = []
-
-  //   for (let i = 0; i < this.size; i++) {
-  //   }
-
-  //   return true
-  // }
-
-  /**
    * Set the size of the board to fit mobile screens
    */
   private beforeMount() {

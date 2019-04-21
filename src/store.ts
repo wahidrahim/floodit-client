@@ -8,12 +8,28 @@ const state: IRootState = {
   currentBoard: []
 }
 
-const getters: GetterTree<IRootState, IRootState> = {
-  colors: ({ colors }) => colors
+const getters = {
+  colors: (state) => {
+    return state.colors
+  },
+  currentBoard: (state) => state.currentBoard,
+  gameOver: (state) => {
+    const colors: number[] = []
+
+    for (const color of state.currentBoard) {
+      if (!colors.includes(color)) {
+        colors.push(color)
+        return false
+      }
+    }
+
+    return true
+  }
 }
 
 const mutations: MutationTree<IRootState> = {
   setCurrentBoard({ currentBoard }, board) {
+    console.log('here')
     currentBoard = board
   },
   updateCurrentBoard(
@@ -25,9 +41,39 @@ const mutations: MutationTree<IRootState> = {
 }
 
 export default new Vuex.Store({
-  state,
-  getters,
-  mutations,
+  state: {
+    colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
+    currentBoard: [NaN]
+  },
+  getters: {
+    colors: (state) => {
+      return state.colors
+    },
+    currentBoard: (state) => state.currentBoard,
+    gameOver: (state) => {
+      const colors: number[] = []
+
+      for (const color of state.currentBoard) {
+        if (!colors.includes(color)) {
+          colors.push(color)
+          return false
+        }
+      }
+
+      return true
+    }
+  },
+  mutations: {
+    setCurrentBoard(state, board) {
+      state.currentBoard = board
+    },
+    updateCurrentBoard(
+      state,
+      { index, colorIndex }: { index: number; colorIndex: number }
+    ) {
+      state.currentBoard[index] = colorIndex
+    }
+  },
   actions: {}
 })
 

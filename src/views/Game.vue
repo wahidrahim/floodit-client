@@ -1,22 +1,24 @@
 <template lang="pug">
-  #game
-    board
+#game
+  div {{ currentBoard }}
+  div(v-if='$store.getters.gameOver') Game Over
+  board
 
-    //- TODO: make separate component
-    .actions(v-if='gameOver')
-      .action(@click="")
-        i.mdi.mdi-sword-cross
-        |  Send Challenge
-      .action(@click="showSaveScoreModal = true")
-        i.mdi.mdi-content-save-outline
-        |  Save
+  //- TODO: make separate component
+  .actions(v-if='gameOver')
+    .action(@click="")
+      i.mdi.mdi-sword-cross
+      |  Send Challenge
+    .action(@click="showSaveScoreModal = true")
+      i.mdi.mdi-content-save-outline
+      |  Save
 
-    colors
+  colors
 
-    h1.moves {{ moves || '' }}
+  h1.moves {{ moves || '' }}
 
-    //- TODO: get these states from vuex store
-    save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
+  //- TODO: get these states from vuex store
+  save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
 </template>
 
 <script lang="ts">
@@ -47,6 +49,9 @@ export default class Home extends Vue {
   private showSaveScoreModal = false
   private containerWidth = 0
 
+  get currentBoard() {
+    return this.$store.state.currentBoard
+  }
 }
 </script>
 
