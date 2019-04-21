@@ -1,7 +1,6 @@
 <template lang="pug">
 #game
-  div {{ currentBoard }}
-  div(v-if='$store.getters.gameOver') Game Over
+  div(v-if='gameOver') Game Over
   board
 
   //- TODO: make separate component
@@ -45,12 +44,12 @@ export default class Home extends Vue {
   private size = 14
   private moves = 0
   private board: number[] = []
-  private gameOver = false
   private showSaveScoreModal = false
   private containerWidth = 0
 
-  get currentBoard() {
-    return this.$store.state.currentBoard
+  get gameOver() {
+    console.log(this.$store.getters.currentBoard)
+    return this.$store.getters.gameOver
   }
 }
 </script>
