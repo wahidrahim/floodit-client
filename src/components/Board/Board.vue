@@ -21,7 +21,7 @@ export default class Board extends Vue {
     [key: string]: any // cells: r1c1, r1c2, r1c3, ... , r(SIZE)c(SIZE)
   }
 
-  private size = 3
+  private size = 14
   private boardWidth = 0
   private initialBoard: number[] = []
 

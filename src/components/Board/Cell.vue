@@ -59,12 +59,13 @@ export default class Cell extends Vue implements ICell {
     this.notified = true
     this.notifyNeighbors(colorIndex)
     this.notified = false // ready to be notified again
-    this.colorIndex = colorIndex
 
     this.$store.commit('updateCurrentBoard', {
       index: this.boardIndex,
-      colorIndex: this.colorIndex
+      colorIndex
     })
+
+    this.colorIndex = colorIndex
   }
 
   /**
@@ -90,5 +91,6 @@ export default class Cell extends Vue implements ICell {
 .cell {
   width: 100%;
   height: 100%;
+  transition: background-color 500ms ease-in-out;
 }
 </style>
