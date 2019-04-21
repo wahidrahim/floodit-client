@@ -39,14 +39,13 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
-import Board from '@/components/Board.vue'
-import Cell from '@/components/Cell.vue'
+import Board from '@/components/Board/Board.vue'
 import Colors from '@/components/Colors.vue'
 import SaveScoreModal from '@/components/SaveScoreModal.vue'
 
 @Component({
   components: {
-    Cell,
+    // Cell,
     Colors,
     SaveScoreModal,
     Board

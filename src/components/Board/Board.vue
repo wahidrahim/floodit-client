@@ -3,21 +3,20 @@
   table(:style='{ width: `${boardWidth}px`, height: `${boardWidth}px` }')
     tr(v-for='row in size')
       td(v-for='col in size')
-        //- give the cell a color (static), or the cell will give itself a random color (live)
         cell(:ref='`r${row}c${col}`' @changeColor='changeColor')
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
-import Cell from '@/components/Cell.vue'
+import Cell from './Cell.vue'
 
 @Component({
   components: { Cell }
 })
 export default class Board extends Vue {
   public $refs!: {
-    [key: string]: any // r1c1, r1c2, r1c3, ... ,r(SIZE)c(SIZE)
+    [key: string]: any // cells: r1c1, r1c2, r1c3, ... , r(SIZE)c(SIZE)
   }
 
   private size = 3
@@ -28,13 +27,13 @@ export default class Board extends Vue {
    * Set the size of the board to fit mobile screens
    */
   private beforeMount() {
-    const MAX_WIDTH = 480
-    const PADDING = 32
+    const maxWidth = 480 // px
+    const padding = 32 // px
 
     this.boardWidth =
-      document.body.clientWidth < MAX_WIDTH
-        ? document.body.clientWidth - PADDING
-        : MAX_WIDTH - PADDING
+      document.body.clientWidth < maxWidth
+        ? document.body.clientWidth - padding
+        : maxWidth - padding
   }
 
   /**
