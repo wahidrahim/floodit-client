@@ -72,6 +72,7 @@ export default class Board extends Vue {
 
     if (colorIndex !== firstCell.colorIndex) {
       firstCell.changeColor(colorIndex)
+      this.$store.commit('incrementMoves')
     }
   }
 

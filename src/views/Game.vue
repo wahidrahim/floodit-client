@@ -35,7 +35,9 @@ import SaveScoreModal from '@/components/SaveScoreModal.vue'
   }
 })
 export default class Home extends Vue {
-  private moves = 0
+  get moves() {
+    return this.$store.getters.moves
+  }
 
   get gameOver() {
     return this.$store.getters.gameOver

@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
-    currentBoard: [NaN]
+    currentBoard: [NaN],
+    moves: 0
   },
   getters: {
     colors: (state) => {
@@ -14,8 +15,8 @@ export default new Vuex.Store({
     },
     currentBoard: (state) => state.currentBoard,
     /**
-     * Detects when the game is over,
-     * by checking how manyunique colors are in the board.
+     * Detects when the game is over by checking
+     * how many unique colors are in the board.
      * If there's only 1 color in the board, then game is over
      */
     gameOver: (state) => {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
       }
 
       return colors.length > 1 ? false : true
+    },
+    moves(state) {
+      return state.moves
     }
   },
   mutations: {
@@ -44,6 +48,9 @@ export default new Vuex.Store({
       { index, colorIndex }: { index: number; colorIndex: number }
     ) {
       state.currentBoard.splice(index, 1, colorIndex)
+    },
+    incrementMoves(state) {
+      state.moves++
     }
   },
   actions: {}
