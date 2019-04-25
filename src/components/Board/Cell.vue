@@ -1,5 +1,5 @@
 <template lang="pug">
-.cell(:style='{ backgroundColor: colorString }', @click='$emit("changeColor", colorIndex)')
+.cell(:style='{ backgroundColor: colorString }', @click='$store.dispatch(`changeColor`, colorIndex)')
 </template>
 
 <script lang="ts">

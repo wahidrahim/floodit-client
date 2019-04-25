@@ -4,12 +4,11 @@
     tr(v-for='row in size')
       td(v-for='col in size')
         cell(:ref='`r${row}c${col}`',
-        :boardIndex='boardIndex(row, col)'
-        @changeColor='changeColor')
+        :boardIndex='boardIndex(row, col)')
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 
 import Cell from './Cell.vue'
 
@@ -24,6 +23,14 @@ export default class Board extends Vue {
   private size = 3
   private boardWidth = 0
   private initialBoard: number[] = []
+
+  private get colorChange() {
+    return this.$store.getters.colorChange
+  }
+
+  private get gameOver() {
+    return this.$store.getters.gameOver
+  }
 
   /**
    * Set the size of the board to fit mobile screens
@@ -67,10 +74,11 @@ export default class Board extends Vue {
    * Changes the color of the top-left cell
    * Iff the color picked is different than the top-left cell
    */
-  private changeColor(colorIndex: number) {
+  @Watch('colorChange')
+  public changeColor(colorIndex: number) {
     const firstCell = this.getCellComponent(1, 1)
 
-    if (colorIndex !== firstCell.colorIndex) {
+    if (colorIndex !== firstCell.colorIndex && !this.gameOver) {
       firstCell.changeColor(colorIndex)
       this.$store.commit('incrementMoves')
     }

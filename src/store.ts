@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
     currentBoard: [NaN],
-    moves: 0
+    moves: 0,
+    colorChange: NaN
   },
   getters: {
     colors: (state) => {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     },
     moves(state) {
       return state.moves
+    },
+    colorChange(state) {
+      return state.colorChange
     }
   },
   mutations: {
@@ -53,5 +57,9 @@ export default new Vuex.Store({
       state.moves++
     }
   },
-  actions: {}
+  actions: {
+    changeColor(context, colorIndex: number) {
+      context.state.colorChange = colorIndex
+    }
+  }
 })
