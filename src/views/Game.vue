@@ -4,19 +4,8 @@
   colors
   h1.moves {{ moves || '' }}
 
+  // TODO: game over actions
   div(v-if='gameOver') Game Over
-
-  //- TODO: make separate component
-  // .actions(v-if='gameOver')
-  //   .action(@click="")
-  //     i.mdi.mdi-sword-cross
-  //     |  Send Challenge
-  //   .action(@click="showSaveScoreModal = true")
-  //     i.mdi.mdi-content-save-outline
-  //     |  Save
-
-  //- TODO: get these states from vuex store
-  // save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
 </template>
 
 <script lang="ts">
@@ -59,23 +48,6 @@ export default class Home extends Vue {
     font-size: 4rem;
     margin: 1rem 0 0;
   }
-
-  // .actions {
-  //   position: absolute;
-  //   font-size: 2rem;
-  //   align-self: center;
-  //   left: 0;
-  //   right: 0;
-  //   color: #000;
-
-  //   .action {
-  //     margin: 1rem;
-
-  //     &:hover {
-  //       cursor: pointer;
-  //     }
-  //   }
-  // }
 }
 </style>
 
