@@ -1,15 +1,20 @@
 import Vue from 'vue'
-import Vuex, { GetterTree, MutationTree } from 'vuex'
+import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const defaultState: IFlooditState = {
+  // all the possible colors
+  colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
+  // numeric (color index) representation of the board
+  currentBoard: [NaN],
+  moves: 0,
+  // color (color index) to change the top-left corner cell to
+  colorChange: NaN
+}
+
 export default new Vuex.Store({
-  state: {
-    colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
-    currentBoard: [NaN],
-    moves: 0,
-    colorChange: NaN
-  },
+  state: defaultState,
   getters: {
     colors: (state) => {
       return state.colors
@@ -63,3 +68,10 @@ export default new Vuex.Store({
     }
   }
 })
+
+interface IFlooditState {
+  colors: string[]
+  currentBoard: number[]
+  moves: number
+  colorChange: number
+}
