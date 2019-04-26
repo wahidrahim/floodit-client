@@ -1,6 +1,6 @@
 <template lang="pug">
-ul#colors
-  li(v-for='(color, i) in colors' :key='i',
+ul.colors
+  li.color(v-for='(color, i) in colors' :key='i',
   :style='{ backgroundColor: color }',
   @click='$store.dispatch(`changeColor`, i)')
 </template>
@@ -17,12 +17,12 @@ export default class Colors extends Vue {
 </script>
 
 <style lang="scss" scoped>
-#colors {
+.colors {
   list-style-type: none;
   margin: 2rem 0 0;
   padding: 0;
 
-  li {
+  .color {
     display: inline-block;
     width: calc((100% - 32px) / 6);
     height: 4rem;

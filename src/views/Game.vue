@@ -1,7 +1,10 @@
 <template lang="pug">
 #game
-  div(v-if='gameOver') Game Over
   board
+  colors
+  h1.moves {{ moves || '' }}
+
+  div(v-if='gameOver') Game Over
 
   //- TODO: make separate component
   // .actions(v-if='gameOver')
@@ -11,10 +14,6 @@
   //   .action(@click="showSaveScoreModal = true")
   //     i.mdi.mdi-content-save-outline
   //     |  Save
-
-  colors
-
-  h1.moves {{ moves || '' }}
 
   //- TODO: get these states from vuex store
   // save-score-modal(v-if='showSaveScoreModal' :moves='moves', :size='size' :board='board' @close='showSaveScoreModal = false')
@@ -52,42 +51,31 @@ export default class Home extends Vue {
   max-width: 480px;
   margin: 0 auto;
   text-align: center;
-}
 
-.container {
-  position: relative;
-  display: inline-flex;
-  flex-wrap: wrap;
-  box-shadow: 0 2px 32px rgba(black, 0.2);
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.moves {
-  color: white;
-  font-family: 'Exo 2';
-  font-style: italic;
-  font-size: 4rem;
-  margin: 1rem 0 0;
-}
-
-.actions {
-  position: absolute;
-  font-size: 2rem;
-  align-self: center;
-  left: 0;
-  right: 0;
-  color: #000;
-
-  .action {
-    margin: 1rem;
-
-    &:hover {
-      cursor: pointer;
-    }
+  .moves {
+    color: white;
+    font-family: 'Exo 2';
+    font-style: italic;
+    font-size: 4rem;
+    margin: 1rem 0 0;
   }
+
+  // .actions {
+  //   position: absolute;
+  //   font-size: 2rem;
+  //   align-self: center;
+  //   left: 0;
+  //   right: 0;
+  //   color: #000;
+
+  //   .action {
+  //     margin: 1rem;
+
+  //     &:hover {
+  //       cursor: pointer;
+  //     }
+  //   }
+  // }
 }
 </style>
 
