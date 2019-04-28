@@ -5,7 +5,9 @@
   h1.moves {{ moves || '' }}
 
   // TODO: game over actions
-  div(v-if='gameOver') Game Over
+  div.game-over-actions(v-if='gameOver')
+    div Send Challenge
+    div Save Score
 </template>
 
 <script lang="ts">
@@ -35,6 +37,7 @@ export default class Home extends Vue {
 
 <style lang="scss" scoped>
 #game {
+  padding: relative;
   width: 100%;
   height: 100%;
   max-width: 480px;
@@ -47,6 +50,13 @@ export default class Home extends Vue {
     font-style: italic;
     font-size: 4rem;
     margin: 1rem 0 0;
+  }
+
+  .game-over-actions {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 3rem;
   }
 }
 </style>
