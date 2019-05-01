@@ -5,9 +5,9 @@
   h1.moves {{ moves || '' }}
 
   // TODO: game over actions
-  div.game-over-actions(v-if='gameOver')
-    div Send Challenge
-    div Save Score
+  .game-over-actions(v-if='gameOver')
+    .action Send Challenge
+    .action(@click='saveScore') Save Score
 </template>
 
 <script lang="ts">
@@ -32,12 +32,30 @@ export default class Home extends Vue {
   get gameOver() {
     return this.$store.getters.gameOver
   }
+
+  get initialBoard() {
+    return this.$store.getters.initialBoard
+  }
+
+  private async saveScore() {
+    const score = {
+      moves: this.moves
+    }
+
+    const board = {
+      size: this.initialBoard
+    }
+
+    console.log(score, board)
+    // const res = await this.$api.get('/scores')
+    // console.log(res);
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 #game {
-  padding: relative;
+  position: relative;
   width: 100%;
   height: 100%;
   max-width: 480px;
@@ -57,6 +75,12 @@ export default class Home extends Vue {
     text-align: center;
     width: 100%;
     top: 3rem;
+
+    .action {
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>

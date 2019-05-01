@@ -7,6 +7,7 @@ const defaultState: IFlooditState = {
   // all the possible colors
   colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
   // numeric (color index) representation of the board
+  initialBoard: [NaN],
   currentBoard: [NaN],
   moves: 0,
   // color (color index) to change the top-left corner cell to
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     colors: (state) => {
       return state.colors
     },
+    initialBoard: (state) => state.initialBoard,
     currentBoard: (state) => state.currentBoard,
     /**
      * Detects when the game is over by checking
@@ -49,8 +51,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setCurrentBoard(state, board) {
-      state.currentBoard = board
+    setInitialBoard(state, board) {
+      state.initialBoard = board
+      state.currentBoard = [...state.initialBoard]
     },
     updateCurrentBoard(
       state,
@@ -71,6 +74,7 @@ export default new Vuex.Store({
 
 interface IFlooditState {
   colors: string[]
+  initialBoard: number[]
   currentBoard: number[]
   moves: number
   colorChange: number
