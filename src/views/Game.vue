@@ -6,8 +6,10 @@
 
   // TODO: game over actions
   .game-over-actions(v-if='gameOver')
-    .action Send Challenge
-    .action(@click='saveScore') Save Score
+    .action(@click='sendChallenge') Send Challenge
+  
+  .challenge-url
+    input(value='link to challenge')
 </template>
 
 <script lang="ts">
@@ -25,6 +27,8 @@ import SaveScoreModal from '@/components/SaveScoreModal.vue'
   }
 })
 export default class Home extends Vue {
+  private showChallengeUrl = false
+
   get moves() {
     return this.$store.getters.moves
   }
@@ -33,22 +37,26 @@ export default class Home extends Vue {
     return this.$store.getters.gameOver
   }
 
+  get size() {
+    return this.$store.getters.boardSize
+  }
+
   get initialBoard() {
     return this.$store.getters.initialBoard
   }
 
-  private async saveScore() {
+  private async sendChallenge() {
     const score = {
       moves: this.moves
     }
 
     const board = {
-      size: this.initialBoard
+      size: this.size,
+      cells: this.initialBoard
     }
 
-    console.log(score, board)
-    // const res = await this.$api.get('/scores')
-    // console.log(res);
+    const res = await this.$api.post('/scores', { score, board })
+    console.log(res)
   }
 }
 </script>

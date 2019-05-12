@@ -7,6 +7,7 @@ const defaultState: IFlooditState = {
   // all the possible colors
   colors: ['#ff00e7', '#ff8100', '#e3ff00', '#00ff57', '#00c5ff', '#a300ff'],
   // numeric (color index) representation of the board
+  boardSize: 0,
   initialBoard: [NaN],
   currentBoard: [NaN],
   moves: 0,
@@ -48,10 +49,12 @@ export default new Vuex.Store({
     },
     colorChange(state) {
       return state.colorChange
-    }
+    },
+    boardSize: (state) => state.boardSize
   },
   mutations: {
-    setInitialBoard(state, board) {
+    setInitialBoard(state, { board, size }) {
+      state.boardSize = size
       state.initialBoard = board
       state.currentBoard = [...state.initialBoard]
     },
@@ -74,6 +77,7 @@ export default new Vuex.Store({
 
 interface IFlooditState {
   colors: string[]
+  boardSize: number
   initialBoard: number[]
   currentBoard: number[]
   moves: number

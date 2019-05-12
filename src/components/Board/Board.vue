@@ -67,7 +67,10 @@ export default class Board extends Vue {
       }
     }
 
-    this.$store.commit('setInitialBoard', this.initialBoard)
+    this.$store.commit('setInitialBoard', {
+      board: this.initialBoard,
+      size: this.size
+    })
   }
 
   /**
