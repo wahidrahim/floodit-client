@@ -4,11 +4,12 @@
     tr(v-for='row in size')
       td(v-for='col in size')
         cell(:ref='`r${row}c${col}`',
+        :color='1',
         :boardIndex='boardIndex(row, col)')
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 
 import Cell from './Cell.vue'
 
@@ -16,6 +17,9 @@ import Cell from './Cell.vue'
   components: { Cell }
 })
 export default class Board extends Vue {
+  @Prop({ type: String, default: '' })
+  public boardId!: string
+
   public $refs!: {
     [key: string]: any // cells: r1c1, r1c2, r1c3, ... , r(SIZE)c(SIZE)
   }
@@ -23,6 +27,7 @@ export default class Board extends Vue {
   private size = 3
   private boardWidth = 0
   private initialBoard: number[] = []
+  private cellColors: number[] = []
 
   private get colorChange() {
     return this.$store.getters.colorChange
@@ -50,7 +55,13 @@ export default class Board extends Vue {
    * Set the neighbors of each `cell`,
    * and save the initial `board` as a `number[]`
    */
-  private mounted() {
+  private async mounted() {
+    if (this.boardId) {
+      const { data } = await this.$api.get(`/boards/${this.boardId}`)
+
+      this.cellColors = data.cells
+    }
+
     for (let r = 1; r <= this.size; r++) {
       for (let c = 1; c <= this.size; c++) {
         const cell = this.getCellComponent(r, c)
@@ -61,6 +72,8 @@ export default class Board extends Vue {
           this.getCellComponent(r, c + 1), // right
           this.getCellComponent(r + 1, c) // bottom
         ])
+
+        cell.colorIndex = this.cellColors[this.boardIndex(r, c)]
 
         // save the numeric representation of the initilized board
         this.initialBoard.push(cell.colorIndex)

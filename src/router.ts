@@ -15,10 +15,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "game" */ './views/Game.vue')
     },
     {
-      path: '/scores',
-      name: 'scores',
+      path: '/challenge',
+      name: 'challenge',
       component: () =>
-        import(/* webpackChunkName: "game" */ './views/Scores.vue')
+        import(/* webpackChunkName: "game" */ './views/Challenge.vue')
     }
   ]
 })

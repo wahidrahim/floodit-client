@@ -1,6 +1,6 @@
 <template lang="pug">
 #game
-  board
+  board(:boardId='$route.query.board')
   colors
   h1.moves {{ moves || '' }}
 
@@ -43,6 +43,9 @@ export default class Home extends Vue {
 
   get initialBoard() {
     return this.$store.getters.initialBoard
+  }
+
+  private created() {
   }
 
   private async sendChallenge() {
