@@ -8,4 +8,5 @@ export interface IFlooditGameState {
   initialBoard: number[]
   currentBoard: number[]
   moves: number
+  changeColor: number
 }

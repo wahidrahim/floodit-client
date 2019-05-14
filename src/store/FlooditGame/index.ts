@@ -1,6 +1,8 @@
 import { Module } from 'vuex'
 import { IRootState, IFlooditGameState } from '@store/types'
 import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
 
 export const FlooditGame: Module<IFlooditGameState, IRootState> = {
   state: {
@@ -15,7 +17,10 @@ export const FlooditGame: Module<IFlooditGameState, IRootState> = {
     boardSize: 3,
     initialBoard: [],
     currentBoard: [],
-    moves: 0
+    moves: 0,
+    changeColor: NaN
   },
-  getters
+  getters,
+  mutations,
+  actions
 }

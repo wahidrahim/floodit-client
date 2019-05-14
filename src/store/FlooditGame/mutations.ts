@@ -17,3 +17,5 @@ const mutations: MutationTree<IFlooditGameState> = {
     state.moves++
   }
 }
+
+export default mutations
