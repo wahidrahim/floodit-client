@@ -1,7 +1,54 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Module, StoreOptions } from 'vuex'
 
 Vue.use(Vuex)
+
+interface IRootState {
+  version: string
+}
+
+interface INewGameState {
+  themeColors: string[]
+  boardSize: number
+  initialBoard: number[]
+  currentBoard: number[]
+  moves: number
+}
+
+const NewGame: Module<INewGameState, IRootState> = {
+  namespaced: true,
+  state: {
+    themeColors: [
+      '#ff00e7',
+      '#ff8100',
+      '#e3ff00',
+      '#00ff57',
+      '#00c5ff',
+      '#a300ff'
+    ],
+    boardSize: 3,
+    initialBoard: [],
+    currentBoard: [],
+    moves: 0
+  },
+  getters: {
+    themeColors: ({ themeColors }) => themeColors,
+    initialBoard: ({ initialBoard }) => initialBoard,
+    currentBoard: ({ currentBoard }) => currentBoard,
+    moves: ({ moves }) => moves
+  }
+}
+
+const store: StoreOptions<IRootState> = {
+  state: {
+    version: '1.0.0'
+  },
+  modules: {
+    NewGame
+  }
+}
+
+export default new Vuex.Store<IRootState>(store)
 
 const defaultState: IFlooditState = {
   // all the possible colors
@@ -15,7 +62,7 @@ const defaultState: IFlooditState = {
   colorChange: NaN
 }
 
-export default new Vuex.Store({
+export const oldStore = new Vuex.Store({
   state: defaultState,
   getters: {
     colors: (state) => {
