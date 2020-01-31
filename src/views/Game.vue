@@ -13,7 +13,8 @@
             :ref='`r${x}c${y}`',
             @changeColor='changeColor')
 
-      .actions(v-if='gameOver')
+      //- TEMP: disable for now
+      //- .actions(v-if='gameOver')
         .action(@click="")
           i.mdi.mdi-sword-cross
           |  Send Challenge
@@ -163,4 +164,3 @@ export default class Home extends Vue {
   }
 }
 </style>
-
